@@ -5,7 +5,7 @@ function CountUpAllCountersStartWith(lowercaseLetter) {
         let counterName = counterNames[i]
         let counterNameLowerCase = counterName.value.toLowerCase()
         if (counterNameLowerCase[0] == lowercaseLetter[0]) {
-            counter = GetTallyCounterElement(counterName)
+            let counter = GetTallyCounterElement(counterName)
             ChangeCount(counter, 1)
         }
     }
@@ -20,4 +20,4 @@ function OnKeyDown(event) {
     }
 }
 
-document.addEventListener('keydown', OnKeyDown);
+document.addEventListener('keydown', OnKeyDown)

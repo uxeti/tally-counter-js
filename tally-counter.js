@@ -1,4 +1,14 @@
 
+function GetTallyCounterName(element) {
+    let result = element.getElementsByClassName("tally-counter-name");
+    if (result.length > 0) {
+        return result[0];
+    }
+    else {
+        return null;
+    }
+}
+
 function GetTallyCounterDisplay(element) {
     let display = element.getElementsByClassName("tally-counter-display");
     if (display.length > 0) {
@@ -112,33 +122,49 @@ function CloseButon_OnClick(event) {
     tallyCounter.parentNode.removeChild(tallyCounter)
 }
 
+function OnTallyCounterNameChange(event) {
+    let counter = GetTallyCounterElement(event.target)
+    let addButton = GetTallyCounterAddButton(counter)
+    if (event.target.value.length > 0) {
+        addButton.textContent = "+ (" + event.target.value.toLowerCase()[0] + ")"
+    }
+    else {
+        addButton.textContent = "+"
+    }
+}
+
 function CreateNewTallyCounter() {
     let template = document.getElementById("template")
     let clone = template.cloneNode(true)
     clone.removeAttribute("id")
 
-    var display = GetTallyCounterDisplay(clone)
+    let name = GetTallyCounterName(clone)
+    if (name != null) {
+        name.addEventListener("change", OnTallyCounterNameChange)
+    }
+
+    let display = GetTallyCounterDisplay(clone)
     if (display != null) {
         display.setAttribute("last-viable-value", 0)
         display.value = 0
     }
 
-    var addButton = GetTallyCounterAddButton(clone)
+    let addButton = GetTallyCounterAddButton(clone)
     if (addButton != null) {
         addButton.addEventListener("click", AddButon_OnClick)
     }
 
-    var subtractButton = GetTallyCounterSubtractButton(clone)
+    let subtractButton = GetTallyCounterSubtractButton(clone)
     if (subtractButton != null) {
         subtractButton.addEventListener("click", SubtractButon_OnClick)
     }
 
-    var resetButton = GetTallyCounterResetButton(clone)
+    let resetButton = GetTallyCounterResetButton(clone)
     if (resetButton != null) {
         resetButton.addEventListener("click", ResetButon_OnClick)
     }
 
-    var closeButton = GetTallyCounterCloseButton(clone)
+    let closeButton = GetTallyCounterCloseButton(clone)
     if (closeButton != null) {
         closeButton.addEventListener("click", CloseButon_OnClick)
     }
